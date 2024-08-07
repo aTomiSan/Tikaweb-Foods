@@ -22,7 +22,7 @@ Varastossa-sarake määrittää onko ruokaa kotona varastossa, ja sitä pystyy v
 Pakkauskoko auttaa reseptien automaattisessa lisäämisessä, esim. yksi punajuuripussi on 2x koska siitä riittää kahteen ruokaan.
 Poistettaessa ruoka-aines merkitään näkymättömäksi. Mahdollisesti on oltava kokonaan aineksen poistava ominaisuus. 
 SQL: 
-CREATE TABLE foods (id SERIAL PRIMARY KEY, nimi, tyyppi, koko, kpl, varastossa, kauppalistalla, visibility ) 
+CREATE TABLE foods (id SERIAL PRIMARY KEY, nimi TEXT, tyyppi INT, koko INT, kpl INT, varastossa BOOLEAN, kauppalistalla BOOLEAN, visibility BOOLEAN) 
 Funktiot: 
 def add(food) 		            # lisää ruoka listaan 
 def remove(food)              # poistaa ruoan listasta ja merkitsee tietokannasta visibilityn nollaksi 
@@ -40,6 +40,7 @@ Respetejä voi myös muokata.
 SQL: CREATE TABLE recipes (id SERIAL PRIMARY KEY, name TEXT, foods LIST) 
 Funktiot: 
 def add_recipe()                #
+def add_food()                  #
 def remove_recipe(recipe)       #
 def edit_recipe(recipe)         #
 def choose_recipe()             # lisää reseptin ainesosat kauppalistaan, jos niitä ei ole varastossa   
