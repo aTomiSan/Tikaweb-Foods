@@ -1,58 +1,28 @@
-# Tikaweb-Foods
+Ostosten hallinta-sovellus 
 
-Ruokalista -appi  
+Sovelluksen tarkoitus on hallita kotona olevia ruokia, suunnitella tulevia ruokia ja luoda kauppalista niiden perusteella, ja siten helpottaa arjen ruokaostosten tekemistä. Sen avulla voi myös seurata ruokiin kuluvia menoja. 
 
-Applikaation tarkoitus on hallita kotona olevia ruokia, suunnitella tulevia ruokia ja luoda kauppalista niiden perusteella, ja siten helpottaa arjen ruokaostosten tekemistä. 
+Applikaatiossa on viisi sivua: Etusivu, Ostoslista, Ruoat, Reseptit ja Kulut.
 
-Applikaatiossa on neljä sivua: index, foods, recipes ja groceries (eli kauppalista).
+ETUSIVU-sivulla kirjaudutaan sisään applikaatioon tai luodaan tunnus. 
 
-Index-sivulla kirjaudutaan sisään applikaatioon tai luodaan uusi käyttäjätunnus. Tällä sivulla voi myös lisätä ystävän, joka pääsee näkemään ja muokkaamaan samoja tietokantoja.  
-Funktiot:
-def log_in()       # kirjaudu sisään
-def log_out()      # kirjaudu ulos
-def sign_in()      # luo käyttäjätunnus 
-def add_friend()   # lisää ystävä 
-SQL:
-CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT, password TEXT, friends LIST); 
+OSTOSLISTA-sivu listaa kauppalistan, johon on lisätty kahdelta muulta ruoat- ja reseptit-sivuilta ruoka-ainekset, joita tulee ostaa kaupasta. Ainesten järjestystä on mahdollista muuttaa, jotta se vastaa tavaroiden sijaintia kun kuljetaan kaupan läpi. Koko kauppalistan voi kerralla siirtää varastossa olevaksi. 
+Ostoksen lisääminen tietokantaan vaatii ruoan nimen, määrän, tyypin (järjestystä varten). Lisäksi tietokannassa on sen näkyvyys.
+CREATE TABLE groceries (id SERIAL PRIMARY KEY, name TEXT, amount INT, type INT, visible INT);
 
+FOODS-sivu listaa kaikki ruoka-ainekset, joita kotona yleensä käytetään. Sivu näyttää ensimmäisenä ne ruuat, joita on jo kotona, ja sen jälkeen ne, joita ei ole. Tällä sivulla niitä voi lisätä ja poistaa sekä lisätä kauppalistaan. Varastossa-otsikon alla on ruoat, joita on kotona varastossa ja Loppuneet ruoat otsikon alla ne mitkä on loppu. Poistettaessa ruoka-aines merkitään näkymättömäksi. Mahdollisesti on oltava kokonaan aineksen poistava ominaisuus. 
+Ruoan lisääminen tietokantaan vaatii ruoan nimen, määrän, ja tiedon onko sitä varastossa. Lisäksi tietokannassa on sen näkyvyys.
+CREATE TABLE foods (id SERIAL PRIMARY KEY, name TEXT, amount INT,  visible INT, stored INT); 
 
-Foods-sivu  listaa kaikki ruoka-ainekset, joita kotona yleensä käytetään. Sivu näyttää ensimmäisenä ne ruuat, joita on jo kotona, ja sen jälkeen ne, joita ei ole. Tällä sivulla niitä voi lisätä ja poistaa sekä lisätä kauppalistaan.
-Lisääminen tietokantaan vaatii ruokalajin nimen, tyypin (hedelmä/vihannes, kuivaruoka, proteiini, maitotuotteet, kuiva-aineet, tavarat jne) numeroituina, koon, kappalemäärän, varastossa, kauppalistalla, ja näkyvyys. 
-Varastossa-sarake määrittää onko ruokaa kotona varastossa, ja sitä pystyy vaihtamaan tällä sivulla. 
-Pakkauskoko auttaa reseptien automaattisessa lisäämisessä, esim. yksi punajuuripussi on 2x koska siitä riittää kahteen ruokaan.
-Poistettaessa ruoka-aines merkitään näkymättömäksi. Mahdollisesti on oltava kokonaan aineksen poistava ominaisuus. 
-SQL: 
-CREATE TABLE foods (id SERIAL PRIMARY KEY, nimi TEXT, tyyppi INT, koko INT, kpl INT, varastossa BOOLEAN, kauppalistalla BOOLEAN, visibility BOOLEAN); 
-Funktiot: 
-def add(food) 		            # lisää ruoka listaan 
-def remove(food)              # poistaa ruoan listasta ja merkitsee tietokannasta visibilityn nollaksi 
-def store(food)               # merkitsee ruoan varastossa olevaksi 
-def unstore(food)             # merkitsee ruoan pois varastosta/loppuneeksi 
-def add_grocery(food) 	    	# lisää ainesosan kauppalistaan
-def remove_permanently(food)  # poistaa ruoan tietokannasta kokonaan
-
-
-Recipes-sivu listaa reseptit ja niiden ainesosat. Tällä sivulla reseptejä voi lisätä ja poistaa sekä lisätä kauppalistaan. 
-Jos jokin reseptin ruoka-aine ei ole foods-tietokannassa, niin se pitää ensin lisätä sinne. 
-Resepteissä on pakolliset ja valinnaiset ainesosat. 
-Lisääminen tietokantaan vaatii reseptin nimen, listan pakollisista ainesosista ja listan valinnaisista ainesosista. 
+RESEPTIT-sivu listaa reseptit ja niiden ainesosat. Tällä sivulla reseptejä voi lisätä ja poistaa sekä lisätä ainesosat kauppalistaan.  Jos jokin reseptin ruoka-aine ei ole foods-tietokannassa, niin se lisätään ensin sinne. Lisääminen tietokantaan vaatii reseptin nimen, listan pakollisista ainesosista ja listan valinnaisista ainesosista. 
 Respetejä voi myös muokata. 
-SQL: 
-CREATE TABLE recipes (id SERIAL PRIMARY KEY, name TEXT, foods LIST); 
-Funktiot: 
-def add_recipe()                #
-def add_food()                  #
-def remove_recipe(recipe)       #
-def edit_recipe(recipe)         #
-def choose_recipe()             # lisää reseptin ainesosat kauppalistaan, jos niitä ei ole varastossa   
+Reseptin tiedot tietokannassa on sen nimi, ainesosat ja lisätiedot. 
+CREATE TABLE recipes (id SERIAL PRIMARY KEY, name TEXT, ingredients TEXT, additional TEXT);  
 
+KULUT-sivulle kirjataan kulut joita on mennyt kaupassa käyntiin. Tietokannassa on tiedot kulutetusta rahasta ja ajankohdasta. 
+CREATE TABLE expenses (id SERIAL PRIMARY KEY, time TIMESTAMP, value INT); 
 
-Groceries-sivu listaa kauppalistan, johon on lisätty kahdelta aiemmalta sivulta ruoka-ainekset, joita tulee ostaa kaupasta. 
-Ainekset on listattu niiden tyypin mukaan siten, että ne vastaa tavaroiden sijaintia kun kuljetaan kaupan läpi. Tätä järjestystä on mahdollista muuttaa tällä sivulla. 
-SQL: 
-CREATE TABLE groceries (id SERIAL PRIMARY KEY, nimi TEXT, tyyppi INT);
-Funktiot: 
-def add_grocery(food)           # lisää ainesosat kauppalistaan, jos niitä ei ole varastossa   
-def remove_grocery(food)        # poistaa ainesosan kauppalistasta
+Lisäksi sovelluksessa on tietokanta käyttäjistä. 
+CREATE TABLE users (id SERIAL PRIMARY KEY, username TEXT, password TEXT); 
 
 
