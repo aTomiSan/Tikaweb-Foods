@@ -1,0 +1,24 @@
+{% if session.username %}
+{% extends "layout.html" %}
+{% block content %}
+<div style="margin-left:2%">
+<p>Kirjautunut {{ session.username }}</p> 
+<br>
+</div>
+{% endblock %}
+{% else: %}
+<div style="margin-left:2%; margin-top:5%">
+<h3>Kirjaudu Sisään:</h3> 
+<form action="/login" method="POST">
+<p>Käyttäjänimi:<br>
+<input type="text" name="username" ><br>
+<p>Salasana:<br>
+<input type="password" name="password" ><br>
+<br>
+<input type="submit" value="Kirjaudu">
+</form>
+</div>
+<br>
+<a style="margin-left:2%; margin-top:5%" href="/new_user">Luo uusi käyttäjä<a>
+    
+{% endif %}
