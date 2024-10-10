@@ -23,7 +23,7 @@ OHJEET SOVELLUKSEN TESTAAMISEEN:
 
 Toistaiseksi sovellukseen riittää, että tekee uuden käyttäjän niin saa pääsyn tietokantoihin. Tietokannat eivät siis ole käyttäjäkohtaisia. 
 
-SQL-komennot tietokantojen luomiseen testikäyttöä varten. 
+SQL-komennot tietokantojen luomiseen testikäyttöä varten. Tiedostoissa on myös schema.sql, jossa on samat komennot helpommin toteutettavissa (esim. komennolla psql < schema.sql) 
 
 CREATE TABLE foods (id SERIAL PRIMARY KEY, name TEXT, amount INT,  visible INT, stored INT); 
 CREATE TABLE groceries (id SERIAL PRIMARY KEY, name TEXT, amount INT, type INT, visible INT);
