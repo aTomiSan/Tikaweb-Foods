@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title %}Lisää ostos{% endblock %}
+{% block content %}
+<h2>Lisää ostos</h2>
+<form action="/add_grocery" method="POST">
+<b>Nimi</b><br>
+<textarea name="name" rows="1" cols="30"></textarea> <br> 
+<br>
+<b>Kappalemäärä</b><br>
+<input type="number" name="amount" value="1"> <br> 
+<br>
+<!-- <b>Tyyppi</b><br>
+<input type="radio" name="type", value="0">Tavarat<br>
+<input type="radio" name="type", value="1">Hedelmät ja vihannekset<br>
+<input type="radio" name="type", value="2">Proteiini<br>
+<input type="radio" name="type", value="3">Maitotuotteet<br>
+<input type="radio" name="type", value="4">Kuivaruoka<br>
+<input type="radio" name="type", value="5">Pakasteet<br>
+<br> -->
+<input type="submit" value="Lisää ostos">
+</form>
+{% endblock %}

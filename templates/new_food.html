@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}Lisää ostos{% endblock %}
+{% block content %}
+<div style="margin-left:2%">
+<form action="/add_food" method="POST">
+    <h3>Lisää ruoka</h3>
+    <b>Nimi:</b><br> <textarea name="name" rows="1" cols="30"></textarea> 
+    <br> 
+    <br>
+    <b>Kuinka monta kappaletta?</b><br> 
+        <input type="number" name="amount" value=1> 
+    <br>
+    <br>
+    <b>Onko varastossa?</b><br> 
+    <input type="radio" name="stored", value=1>Kyllä
+    <input type="radio" name="stored", value=0>Ei
+    <br>
+    <br> 
+    <b>Lisätäänkö ostoslistaan?</b><br> 
+    <input type="radio" name="add_grocery", value=1>Kyllä
+    <input type="radio" name="add_grocery", value=0>Ei
+<br>
+    <br>
+    <input type="submit" value="Lisää ruoka">
+</form>
+<br>
+</div>
+{% endblock %}

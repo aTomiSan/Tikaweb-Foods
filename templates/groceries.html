@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 style="margin-left:2%">Ostoslista</h1>
+    <div style="margin-left:2%">
+        <form style="display: flex; align-items: center;" action="/add_grocery" method="POST">
+        <textarea name="name" rows="1" cols="30"></textarea> 
+        &ensp;
+        &ensp;
+        <input type="number" name="amount" value="1" size="1">
+        &ensp;
+        &ensp;
+        <input type="submit" value="Lisää ostos">
+        </form>
+    </div>
+    <br>
+    <div style="display:inline;">
+        {% for grocery in grocery_list %}
+        <br>
+        {% if grocery.name != "" %}
+            {% if grocery.amount > 1 %}
+            <p style="display:inline; margin-left:2%;" >{{ grocery.name }} x{{ grocery.amount }}</p>
+            &emsp; 
+            <div style="display:inline; margin-right: 65%; float: right;">
+        <form style="display:inline" action="/decrease" method="POST">
+        <input type="hidden" name="id" value="{{ grocery.id }}">
+        <input  type="submit" value="-">
+        </form>
+        {% if 20 > grocery.amount  %}
+        <form style="display:inline; " action="/increase" method="POST">
+        <input type="hidden" name="id" value="{{ grocery.id }}">
+        <input type="submit" value="+">
+        </form>
+        &emsp; 
+        <form style="display:inline; " action="/before" method="GET">
+            <input type="hidden" name="id" value="{{ grocery.id }}">
+            <input type="submit" value="&lt">
+            </form>
+            {{ grocery.type }}
+        <form style="display:inline; " action="/after" method="GET">
+            <input type="hidden" name="id" value="{{ grocery.id }}">
+            <input type="submit" value="&gt">
+            </form>
+        </div>
+        {% endif %}       
+        <br>{% elif grocery.amount == 1 %}
+        <p style="display:inline; margin-left:2%;">{{  grocery.name }}</p>
+        &emsp; 
+        <div style="display:inline; margin-right: 65%; float: right;">
+        <form style="display:inline; " action="/remove_grocery" method="POST">
+        <input type="hidden" name="id" value="{{ grocery.id }}">
+        <input  type="submit" value="Poista">
+        </form>
+        <form style="display:inline; " action="/increase" method="POST">
+        <input type="hidden" name="id" value="{{ grocery.id }}">
+        <input type="submit" value="+">
+        </form>
+        &ensp;
+        <form style="display:inline; " action="/before" method="GET">
+            <input type="hidden" name="id" value="{{ grocery.id }}">
+            <input type="submit" value="&lt">
+            </form>
+            {{ grocery.type }}
+        <form style="display:inline; " action="/after" method="GET">
+            <input type="hidden" name="id" value="{{ grocery.id }}">
+            <input type="submit" value="&gt">
+            </form>
+        </div>
+    </div>
+<br>
+{% endif %}       
+{% endif %} 
+{% endfor %}
+<br>
+<br>
+<div style="margin-left:4%;">
+<form action="/all_stored">
+    <input type="submit" value="Lisää kaikki varastoon">
+</form>
+<br>
+<form action="/empty_groceries">
+<input type="submit" value="Tyhjennä">
+</form>
+</div>
+<br>
+{% endblock %}

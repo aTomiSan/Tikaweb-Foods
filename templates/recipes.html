@@ -1,0 +1,15 @@
+
+{% extends "layout.html" %}
+{% block title %}Lisää ostos{% endblock %}
+{% block content %}
+<div style="margin-left:2%">
+    <h1>Reseptit</h1>
+<a href="/new_recipe"><b>Lisää resepti</b></a><br>
+<br>
+<br>
+{% for recipe in recipes %}
+<a href="/recipes/{{ recipe.id }}">{{ recipe.name }}</a><br>
+{% endfor %}
+</div>
+{% endblock %}
+

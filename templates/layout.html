@@ -1,0 +1,27 @@
+{% if session.username %}
+<!doctype html>
+<div style="margin:0% 2% 0% 2%;">
+<br>
+<hr>
+<div style="margin-left:2%;">
+<a href="/">Etusivu</a> &ensp; 
+<a href="/groceries">Ostoslista</a> &ensp; 
+<a href="/foods">Ruoat</a> &ensp; 
+<a href="/recipes">Reseptit</a> &ensp; 
+<a href="/expenses">Kulut</a> 
+</div>
+<hr>
+<br>
+{% block content %} {% endblock %}
+<br>
+<hr>
+<br>
+<a style="margin-left:2%;" href="/logout">Kirjaudu ulos</a>
+<br>
+{% else %}
+<br>
+<p>Et ole kirjautuneena sisään. </p><a href="/">Kirjaudu sisään</a>
+<br> 
+<br> 
+{% endif %}
+</div>

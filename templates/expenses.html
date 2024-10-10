@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block title %}Lisää ostos{% endblock %}
+{% block content %}
+<div style="margin-left:2%">
+<h1>Kulut</h1>
+
+<p>Lisää kulu:</p>
+<form action="/add_expense" method="POST">
+<input type="textarea" name="value">
+<input type="submit" value="Lisää">
+</form>
+<br>
+<br>
+<!-- {% for year in years %}
+    <h2>{{ year }}</h2>
+        {% for month in months %}
+        <h3>{{ month }}</h3>
+        {% endfor %}
+{% endfor %} -->
+{% for expense in expense_list %}
+{% if expense.time.month > 9 %}
+    {% if expense.time.minute > 9 %}
+    <p> {{ expense.time.day }}.{{ expense.time.month }}.{{ expense.time.year }}: {{ expense.time.hour }}:{{ expense.time.minute  }} &emsp; <b>{{ expense.value }}€</b></p>
+    {% else %}
+    <p> {{ expense.time.day }}.{{ expense.time.month }}.{{ expense.time.year }}: {{ expense.time.hour }}:0{{ expense.time.minute  }} &emsp; <b>{{ expense.value }}€</b></p>
+    {% endif %}
+{% else %}
+    {% if expense.time.minute > 9 %}
+    <p> {{ expense.time.day }}.0{{ expense.time.month }}.{{ expense.time.year }}: {{ expense.time.hour }}:{{ expense.time.minute  }} &emsp; <b>{{ expense.value }}€</b></p>
+    {% else %}
+    <p> {{ expense.time.day }}.0{{ expense.time.month }}.{{ expense.time.year }}:  {{ expense.time.hour }}:0{{ expense.time.minute  }} &emsp; <b>{{ expense.value }}€</b></p>
+    {% endif %}
+{% endif %}
+{% endfor %}
+</div>
+<br>
+{% endblock %}

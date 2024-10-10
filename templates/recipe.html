@@ -1,0 +1,46 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<div style="margin-left:2%">
+    <a href="/recipes">Takaisin resepteihin</a>
+    <br>
+    <br>
+    <br>
+<div style="display: inline" style="margin-left:2%">
+<h1 style="display: inline;">{{ name }}</h1>
+&emsp;
+<form style="display: inline;" action="/edit_recipe" method="POST"> 
+<input type="hidden" name="id" value="{{ id }}">
+<input type="submit" value="Muokkaa"><br><br>
+</form>
+</div>
+<br>
+<b>Ainesosat:</b>
+{% for i in ingredients%}
+{% if i[1]==1 %}
+<p>{{ i[0] }} &emsp; (varastossa)</p>
+{% elif i[1]==2 %}
+<p>{{ i[0] }} &emsp; (ostoslistalla)</p>
+{% else %}
+<p style="color:red;"><b>{{ i[0] }}</b></p>
+{% endif %} 
+{% endfor %}
+<br>
+<form action="/add_missing" method="POST"> 
+<input type="hidden" name="id" value="{{ id }}">
+<input type="submit" value="Lisää puuttuvat ostoslistaan"><br><br>
+</form>
+<form action="/add_all" method="POST"> 
+<input type="hidden" name="id" value="{{ id }}">
+<input type="submit" value="Lisää kaikki ostoslistaan">
+</form>
+<br>
+<br>
+<br>
+<b>Lisätiedot:</b>
+<p>{{ additional }}</p>
+</div>
+
+<br>
+{% endblock %}
+
